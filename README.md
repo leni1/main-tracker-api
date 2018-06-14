@@ -1,2 +1,15 @@
-# main-tracker-api
-An API that helps users tracking their maintenance and repair requests as well as their status
+# Maintenance Tracker API
+An API that allows users to make maintenance/repair requests to operations or repairs department and monitor the status of their request
+
+## Features
+The API should have the following API endpoints working:
+
+Endpoint | Functionality
+-------- | -------------
+GET /api/v1/users/requests | Get all requests
+GET /api/v1/users/requests/`<requestId>` | Get a request
+POST /api/v1/users/requests | Create a request
+PUT /api/v1/users/requests/`<requestId>` | Modify a request
+
+## Note
+This API will use data structures to store data.
