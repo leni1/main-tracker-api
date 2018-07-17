@@ -1,5 +1,6 @@
 """Class for the Request"""
 
+
 class RequestClass(object):
     """
     req_id: integer that identifies a request

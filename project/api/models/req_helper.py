@@ -1,6 +1,7 @@
 """Request Helper class"""
 from project.api.models.request_class import RequestClass
 
+
 class RequestHelper():
     """
     req_db: a list storing requests
@@ -20,7 +21,7 @@ class RequestHelper():
             raise TypeError
         else:
             if (req_id != 0 and len(req_name) != 0
-                and len(req_type) != 0 and len(req_desc) != 0):
+               and len(req_type) != 0 and len(req_desc) != 0):
                 return True
             else:
                 return 'ID, name, type and description cannot be 0 or empty'
