@@ -11,20 +11,18 @@ class RequestHelper():
     def check_request(self, req_id, req_name, req_type, req_desc):
         """Method for checking that the request's id, name, type
         and description have valid data types."""
+        str_args = [req_name, req_type, req_desc]
         if not isinstance(req_id, int):
             raise TypeError
-        elif not isinstance(req_name, str):
-            raise TypeError
-        elif not isinstance(req_type, str):
-            raise TypeError
-        elif not isinstance(req_desc, str):
-            raise TypeError
+        for arg in str_args:
+            if not isinstance(arg, str):
+                raise TypeError
+
+        if (req_id != 0 and len(req_name) != 0
+           and len(req_type) != 0 and len(req_desc) != 0):
+            return True
         else:
-            if (req_id != 0 and len(req_name) != 0
-               and len(req_type) != 0 and len(req_desc) != 0):
-                return True
-            else:
-                return 'ID, name, type and description cannot be 0 or empty'
+            return 'ID, name, type and description cannot be 0 or empty'
 
     def create_request(self, req_id, req_name, req_type, req_desc):
         """Method for creating a request.
