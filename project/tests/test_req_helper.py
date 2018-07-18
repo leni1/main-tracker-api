@@ -24,11 +24,16 @@ class TestRequest(unittest.TestCase):
                               msg='Request helper class not instantiated')
 
     def test_req_helper_methods(self):
-        self.assertTrue(hasattr(self.req_helper, 'check_request'))
-        self.assertTrue(hasattr(self.req_helper, 'create_request'))
-        self.assertTrue(hasattr(self.req_helper, 'change_request'))
-        self.assertTrue(hasattr(self.req_helper, 'fetch_all_requests'))
-        self.assertTrue(hasattr(self.req_helper, 'fetch_by_id_request'))
+        self.assertTrue(hasattr(self.req_helper, 'check_request'),
+                        msg='Missing check_request method')
+        self.assertTrue(hasattr(self.req_helper, 'create_request'),
+                        msg='Missing create_request method')
+        self.assertTrue(hasattr(self.req_helper, 'change_request'),
+                        msg='Missing change_request method')
+        self.assertTrue(hasattr(self.req_helper, 'fetch_all_requests'),
+                        msg='Missing fetch_all_requests method')
+        self.assertTrue(hasattr(self.req_helper, 'fetch_by_id_request'),
+                        msg='Missing fetch_by_id_method')
 
     def test_check_req_method_has_correct_args(self):
         self.assertIn('self', str(
