@@ -13,13 +13,9 @@ class TestRequest(unittest.TestCase):
                               msg='Request class is invalid')
 
     def test_req_attr(self):
+        args = ['req_id', 'req_name', 'req_type', 'req_desc']
         self.request_class = RequestClass(1, 'somename',
                                           'sometype', 'somedescription')
-        self.assertTrue(hasattr(self.request_class, 'req_id'),
-                        msg=AttributeError)
-        self.assertTrue(hasattr(self.request_class, 'req_name'),
-                        msg=AttributeError)
-        self.assertTrue(hasattr(self.request_class, 'req_type'),
-                        msg=AttributeError)
-        self.assertTrue(hasattr(self.request_class, 'req_desc'),
-                        msg=AttributeError)
+        for arg in args:
+            self.assertTrue(hasattr(self.request_class, arg),
+                            msg=AttributeError)
