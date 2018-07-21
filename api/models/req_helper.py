@@ -1,5 +1,5 @@
 """Request Helper class"""
-from project.api.models.request_class import RequestClass
+from api.models.request_class import RequestClass
 
 
 class RequestHelper():

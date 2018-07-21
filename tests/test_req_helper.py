@@ -1,8 +1,8 @@
 import inspect
 import unittest
 
-from project.api.models.req_helper import RequestHelper
-from project.api.models.request_class import RequestClass
+from api.models.req_helper import RequestHelper
+from api.models.request_class import RequestClass
 
 
 class TestRequest(unittest.TestCase):
