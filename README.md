@@ -1,6 +1,9 @@
 # Maintenance Tracker API
 [![Build Status](https://travis-ci.org/leni1/main-tracker-api.svg?branch=develop)](https://travis-ci.org/leni1/main-tracker-api/)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5b3aef1187f59813b842f49198b70c7ad96a3c1b
 An API that allows users to make maintenance/repair requests to operations or repairs department and monitor the status of their request.
 
 ## Features
