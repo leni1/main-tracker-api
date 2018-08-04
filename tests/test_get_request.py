@@ -16,7 +16,7 @@ class MaintenanceViews(unittest.TestCase):
     def tearDown(self):
         self.req_db
 
-    def test_get_business(self):
+    def test_fetch_all_requests(self):
         self.test_request.post(
             '/users/requests',
             content_type='application/json',
@@ -29,7 +29,7 @@ class MaintenanceViews(unittest.TestCase):
                                          content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
-    def test_get_business(self):
+    def test_fetch_request_id(self):
         new_req = self.test_request.post(
             '/users/requests',
             content_type='application/json',
