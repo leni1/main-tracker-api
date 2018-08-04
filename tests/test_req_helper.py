@@ -52,10 +52,9 @@ class TestRequest(unittest.TestCase):
             inspect.getfullargspec(self.req_helper.check_request)),
             msg='Method has no req_desc parameter')
 
-    def test_check_req_method_raise_type_error(self):
-        with self.assertRaises(TypeError):
-            self.req_helper.check_request('', 'somename',
-                                          'sometype', 'somedescription')
+    def test_check_req_method_raise_error(self):
+        with self.assertRaises(ValueError):
+            self.req_helper.check_request('', 'somename', 'sometype', 'somedescription')
         with self.assertRaises(TypeError):
             self.req_helper.check_request(1, 1, 'sometype', 'somedescription')
         with self.assertRaises(TypeError):
@@ -65,8 +64,7 @@ class TestRequest(unittest.TestCase):
 
     def test_check_req_method_null_values(self):
         invalid_req = self.req_helper.check_request(0, '', '', '')
-        self.assertEqual(
-            'ID, name, type and description cannot be 0 or empty', invalid_req)
+        self.assertEqual(invalid_req, False, msg='Method accepts zero or empty values')
 
     def test_check_req_method_success(self):
         valid_req = self.req_helper.check_request(1, 'somename',
@@ -89,6 +87,11 @@ class TestRequest(unittest.TestCase):
         self.assertIn('req_desc', str(
             inspect.getfullargspec(self.req_helper.create_request)),
             msg='Method has no req_desc parameter')
+
+    def test_create_request_return_object(self):
+        new_req = self.req_helper.create_request(1, 'somename',
+                                       'sometype', 'somedescription')
+        self.assertTrue(hasattr(new_req, '__dict__'), msg='New request has no __dict__ method.')
 
     def test_create_request_success(self):
         self.req_helper.create_request(1, 'somename',
