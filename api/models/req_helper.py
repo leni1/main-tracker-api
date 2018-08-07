@@ -61,7 +61,6 @@ class RequestHelper(object):
         if not isinstance(req_id, int):
             raise TypeError
         for req in self.req_db:
-            # import pdb; pdb.set_trace()
             if req_id == req.req_id:
                 return vars(req)
         return 'Request not found'
