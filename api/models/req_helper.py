@@ -23,9 +23,13 @@ class RequestHelper(object):
 
         valid_req_name = re.search(r'^[A-Za-z\s]', req_name)
         valid_req_type = re.search(r'^[A-Za-z\s]', req_type)
-        valid_req_desc = re.search(r'^[\w\d!@#$%^&*()-+_/|}{":;\'><~`.,?\s]', req_desc)
-        if req_id != 0 and valid_req_name and valid_req_type and valid_req_desc:
-            return True
+        valid_req_desc = re.search(
+            r'^[\w\d!@#$%^&*()-+_/|}{":;\'><~`.,?\s]', req_desc)
+        if (req_id != 0
+           and valid_req_name
+           and valid_req_type
+           and valid_req_desc):
+                return True
         return False
 
     def create_request(self, req_id, req_name, req_type, req_desc):
