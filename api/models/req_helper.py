@@ -1,4 +1,5 @@
 """Request Helper class"""
+import re
 
 from api.models.request_class import RequestClass
 
@@ -20,8 +21,15 @@ class RequestHelper(object):
             if not isinstance(arg, str):
                 raise TypeError
 
-        if req_id != 0 and len(req_name) and len(req_type) and len(req_desc):
-            return True
+        valid_req_name = re.search(r'^[A-Za-z\s]', req_name)
+        valid_req_type = re.search(r'^[A-Za-z\s]', req_type)
+        valid_req_desc = re.search(
+            r'^[\w\d!@#$%^&*()-+_/|}{":;\'><~`.,?\s]', req_desc)
+        if (req_id != 0
+           and valid_req_name
+           and valid_req_type
+           and valid_req_desc):
+                return True
         return False
 
     def create_request(self, req_id, req_name, req_type, req_desc):
@@ -31,7 +39,7 @@ class RequestHelper(object):
         if self.check_request(req_id, req_name, req_type, req_desc):
             new_req = RequestClass(req_id, req_name, req_type, req_desc)
             self.req_db.append(new_req)
-            return new_req
+            return vars(new_req)
 
     def change_request(self, req_id, new_name, new_type, new_desc):
         """Method for modifyng a request.
@@ -43,7 +51,7 @@ class RequestHelper(object):
                                    req_name=new_name,
                                    req_type=new_type, req_desc=new_desc)
                 self.req_db[index] = req
-                return req
+                return vars(req)
         return False
 
     def fetch_by_id_request(self, req_id):
@@ -54,9 +62,8 @@ class RequestHelper(object):
             raise TypeError
         for req in self.req_db:
             if req_id == req.req_id:
-                return req
-            else:
-                return 'Request not found'
+                return vars(req)
+        return 'Request not found'
 
     def fetch_all_requests(self):
         """Method for returning all requests in req_db."""
