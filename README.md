@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/leni1/main-tracker-api.svg?branch=develop)](https://travis-ci.org/leni1/main-tracker-api/)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7b26ed0f64d520f1360f/maintainability)](https://codeclimate.com/github/leni1/main-tracker-api/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/7b26ed0f64d520f1360f/test_coverage)](https://codeclimate.com/github/leni1/main-tracker-api/test_coverage)
-[![Coverage Status](https://coveralls.io/repos/github/leni1/main-tracker-api/badge.svg)](https://coveralls.io/github/leni1/main-tracker-api)
+[![Coverage Status](https://coveralls.io/repos/github/leni1/main-tracker-api/badge.svg?branch=develop)](https://coveralls.io/github/leni1/main-tracker-api?branch=develop)
 
 An API that allows users to make maintenance/repair requests to operations or repairs department and monitor the status of their request.
 
