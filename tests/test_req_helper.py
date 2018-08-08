@@ -139,7 +139,6 @@ class TestRequest(unittest.TestCase):
             old_req_name = req.req_name
             old_req_type = req.req_type
             old_req_desc = req.req_desc
-            break
         self.request_helper.change_request(
             1, 'newname', 'newtype', 'newdescription')
         for req in self.req_db:
