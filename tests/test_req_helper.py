@@ -10,7 +10,7 @@ class TestRequest(unittest.TestCase):
 
     def setUp(self):
         self.request_helper = RequestHelper()
-        self.req_db = self.request_helper.req_db = []
+        self.req_db = []
 
     def tearDown(self):
         self.req_db
@@ -24,6 +24,8 @@ class TestRequest(unittest.TestCase):
                               msg='Request helper class not instantiated')
 
     def test_req_helper_methods(self):
+        self.assertTrue(hasattr(self.request_helper, 'req_db'),
+                        msg='Missing request database')
         self.assertTrue(hasattr(self.request_helper, 'check_request'),
                         msg='Missing check_request method')
         self.assertTrue(hasattr(self.request_helper, 'create_request'),
@@ -132,25 +134,25 @@ class TestRequest(unittest.TestCase):
                           self.request_helper.change_request)),
                       msg='Method has no new_desc parameter')
 
-    def test_change_req_method(self):
+    def test_change_req_method_success(self):
         self.request_helper.create_request(
             1, 'somename', 'sometype', 'somedescription')
         for req in self.req_db:
             old_req_name = req.req_name
             old_req_type = req.req_type
             old_req_desc = req.req_desc
-        self.request_helper.change_request(
-            1, 'newname', 'newtype', 'newdescription')
-        for req in self.req_db:
-            new_req_name = req.req_name
-            new_req_type = req.req_type
-            new_req_desc = req.req_desc
-        self.assertNotEqual(old_req_name, new_req_name,
-                            msg='Request object not updated.')
-        self.assertNotEqual(old_req_type, new_req_type,
-                            msg='Request object not updated.')
-        self.assertNotEqual(old_req_desc, new_req_desc,
-                            msg='Request object not updated.')
+            self.request_helper.change_request(
+                1, 'newname', 'newtype', 'newdescription')
+            for req in self.req_db:
+                new_req_name = req.req_name
+                new_req_type = req.req_type
+                new_req_desc = req.req_desc
+            self.assertNotEqual(old_req_name, new_req_name,
+                                msg='Request object not updated.')
+            self.assertNotEqual(old_req_type, new_req_type,
+                                msg='Request object not updated.')
+            self.assertNotEqual(old_req_desc, new_req_desc,
+                                msg='Request object not updated.')
 
     def test_fetch_req_id_method_has_correct_args(self):
         self.assertIn('self', str(
@@ -184,8 +186,8 @@ class TestRequest(unittest.TestCase):
     def test_fetch_all_req_method_success(self):
         self.request_helper.create_request(
             1, 'somename', 'sometype', 'somedescription')
-        self.assertIsInstance(self.request_helper.fetch_all_requests(),
-                              list,
+        result = self.request_helper.fetch_all_requests()
+        self.assertIsInstance(result, list,
                               msg='Fetch all method not returning list db')
-        self.assertNotEqual(len(self.req_db), 0,
+        self.assertNotEqual(len(result), 0,
                             msg='No Request objects in the db to retrieve.')
