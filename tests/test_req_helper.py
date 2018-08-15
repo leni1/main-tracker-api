@@ -106,7 +106,7 @@ class TestRequest(unittest.TestCase):
         new_req = self.request_helper.create_request(
             1, 'somename', 'sometype', 'somedescription')
         for req in self.req_db:
-            self.assertEqual(vars(req), new_req, msg='No request created.')
+            self.assertIs(vars(req), new_req, msg='No request created.')
             self.assertTrue(hasattr(req, '__dict__'),
                             msg='New request has no __dict__ method.')
             self.assertIsInstance(req, RequestClass,
@@ -141,14 +141,15 @@ class TestRequest(unittest.TestCase):
             old_req_name = req.req_name
             old_req_type = req.req_type
             old_req_desc = req.req_desc
-            self.request_helper.change_request(
-                1, 'newname', 'newtype', 'newdescription')
+            mod_req = self.request_helper.change_request(
+                        1, 'newname', 'newtype', 'newdescription')
             self.assertNotEqual(old_req_name, req.req_name,
                                 msg='Request name not updated.')
             self.assertNotEqual(old_req_type, req.req_type,
                                 msg='Request type not updated.')
             self.assertNotEqual(old_req_desc, req.req_desc,
                                 msg='Request description not updated.')
+            self.assertIs(mod_req, req, msg='Request not changed')
 
     def test_fetch_req_id_method_has_correct_args(self):
         self.assertIn('self', str(
