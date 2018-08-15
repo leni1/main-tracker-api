@@ -67,7 +67,4 @@ class RequestHelper(object):
 
     def fetch_all_requests(self):
         """Method for returning all requests in req_db."""
-        all_requests = []
-        for req in self.req_db:
-            all_requests.append(vars(req))
-        return all_requests
+        return [vars(req) for req in self.req_db]
