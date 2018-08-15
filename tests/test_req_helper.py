@@ -143,16 +143,12 @@ class TestRequest(unittest.TestCase):
             old_req_desc = req.req_desc
             self.request_helper.change_request(
                 1, 'newname', 'newtype', 'newdescription')
-            for req in self.req_db:
-                new_req_name = req.req_name
-                new_req_type = req.req_type
-                new_req_desc = req.req_desc
-            self.assertNotEqual(old_req_name, new_req_name,
-                                msg='Request object not updated.')
-            self.assertNotEqual(old_req_type, new_req_type,
-                                msg='Request object not updated.')
-            self.assertNotEqual(old_req_desc, new_req_desc,
-                                msg='Request object not updated.')
+            self.assertNotEqual(old_req_name, req.req_name,
+                                msg='Request name not updated.')
+            self.assertNotEqual(old_req_type, req.req_type,
+                                msg='Request type not updated.')
+            self.assertNotEqual(old_req_desc, req.req_desc,
+                                msg='Request description not updated.')
 
     def test_fetch_req_id_method_has_correct_args(self):
         self.assertIn('self', str(
