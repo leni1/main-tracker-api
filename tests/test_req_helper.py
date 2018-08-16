@@ -156,6 +156,16 @@ class TestRequest(unittest.TestCase):
             self.assertIsInstance(mod_req, dict,
                                   msg='Request not returned as a dictionary.')
 
+    def test_change_req_method_fail_invalid_id(self):
+        self.request_helper.create_request(
+            1, 'somename', 'sometype', 'somedescription'
+        )
+        invalid_req = self.request_helper.change_request(
+            2, 'newname', 'newtype', 'newdescription'
+        )
+        self.assertFalse(invalid_req,
+                         msg='Non-existent request can be changed.')
+
     def test_fetch_req_id_method_has_correct_args(self):
         self.assertIn('self', str(
                       inspect.getfullargspec(
@@ -166,11 +176,17 @@ class TestRequest(unittest.TestCase):
                           self.request_helper.fetch_by_id_request)),
                       msg='Method has no req_id parameter')
 
-    def test_fetch_req_id_invalid(self):
+    def test_fetch_req_id_non_existent(self):
         self.request_helper.create_request(
             1, 'somename', 'sometype', 'somedescription')
         self.assertEqual(self.request_helper.fetch_by_id_request(2),
                          'Request not found', msg='Request ID not checked')
+
+    def test_fetch_req_id_invalid(self):
+        self.request_helper.create_request(
+            1, 'somename', 'sometype', 'somedescription')
+        with self.assertRaises(TypeError):
+            self.request_helper.fetch_by_id_request('1')
 
     def test_fetch_req_id_success(self):
         self.request_helper.create_request(
