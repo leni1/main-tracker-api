@@ -45,13 +45,13 @@ class RequestHelper(object):
         """Method for modifyng a request.
         Takes a request's id, the new name, type and description
         and updates the RequestClass object with the request id specified."""
-        for index, req in enumerate(self.req_db):
-            if req_id == req.req_id:
-                req = RequestClass(req_id=req_id,
-                                   req_name=new_name,
-                                   req_type=new_type, req_desc=new_desc)
-                self.req_db[index] = req
-                return vars(req)
+        if self.check_request(req_id, new_name, new_type, new_desc):
+            for req in self.req_db:
+                if req_id == req.req_id:
+                    req.req_name = new_name
+                    req.req_type = new_type
+                    req.req_desc = new_desc
+                    return vars(req)
         return False
 
     def fetch_by_id_request(self, req_id):
