@@ -142,6 +142,10 @@ class TestRequest(unittest.TestCase):
             old_req_name = req.req_name
             old_req_type = req.req_type
             old_req_desc = req.req_desc
+            self.assertIn(req, self.req_db,
+                          msg='Request not in database.')
+            self.assertIsInstance(req, RequestClass,
+                                  msg='Invalid RequestClass object.')
             mod_req = self.request_helper.change_request(
                         1, 'newname', 'newtype', 'newdescription')
             self.assertNotEqual(old_req_name, req.req_name,
