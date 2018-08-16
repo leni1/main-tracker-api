@@ -138,6 +138,7 @@ class TestRequest(unittest.TestCase):
         self.request_helper.create_request(
             1, 'somename', 'sometype', 'somedescription')
         for req in self.req_db:
+            old_req_id = req.req_id
             old_req_name = req.req_name
             old_req_type = req.req_type
             old_req_desc = req.req_desc
@@ -149,7 +150,11 @@ class TestRequest(unittest.TestCase):
                                 msg='Request type not updated.')
             self.assertNotEqual(old_req_desc, req.req_desc,
                                 msg='Request description not updated.')
+            self.assertEqual(old_req_id, req.req_id,
+                             msg='Request ID has been changed.')
             self.assertIs(mod_req, req, msg='Request not changed')
+            self.assertIsInstance(mod_req, dict,
+                                  msg='Request not returned as a dictionary.')
 
     def test_fetch_req_id_method_has_correct_args(self):
         self.assertIn('self', str(
