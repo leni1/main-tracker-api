@@ -20,9 +20,9 @@ class MaintenanceViews(unittest.TestCase):
         new_req = self.test_request.post('/users/requests',
                                          content_type='application/json',
                                          data=json.dumps(
-                                             dict(name='Failing Test',
+                                             dict(req_name='Failing Test',
                                                   req_type='Test',
-                                                  description='A failing test')
+                                                  req_desc='A failing test')
                                                   ))
         self.assertEqual(new_req.status_code, 201)
 
@@ -30,9 +30,9 @@ class MaintenanceViews(unittest.TestCase):
         new_req = self.test_request.post('/users/requests',
                                          content_type='application/json',
                                          data=json.dumps(
-                                             dict(name='',
+                                             dict(req_name='',
                                                   req_type='Test',
-                                                  description='A failing test')
+                                                  req_desc='A failing test')
                                                   ))
         self.assertEqual(new_req.status_code,
                          400, msg='Empty req name allowed')
@@ -41,9 +41,9 @@ class MaintenanceViews(unittest.TestCase):
         new_req = self.test_request.post('/users/requests',
                                          content_type='application/json',
                                          data=json.dumps(
-                                             dict(name='Failing Test',
+                                             dict(req_name='Failing Test',
                                                   req_type='',
-                                                  description='A failing test')
+                                                  req_desc='A failing test')
                                                   ))
         self.assertEqual(new_req.status_code,
                          400, msg='Empty req type allowed')
@@ -52,9 +52,9 @@ class MaintenanceViews(unittest.TestCase):
         new_req = self.test_request.post('/users/requests',
                                          content_type='application/json',
                                          data=json.dumps(
-                                             dict(name='Failing Test',
+                                             dict(req_name='Failing Test',
                                                   req_type='Test',
-                                                  description='')
+                                                  req_desc='')
                                                   ))
         self.assertEqual(new_req.status_code,
                          400, msg='Empty req description allowed')
