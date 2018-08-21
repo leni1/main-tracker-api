@@ -1,7 +1,7 @@
 """Request Helper class"""
 import re
 
-from api.models.request_class import RequestClass
+from .request_class import RequestClass
 
 
 class RequestHelper(object):

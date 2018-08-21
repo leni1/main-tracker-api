@@ -22,15 +22,18 @@ def create_request():
         return jsonify(new_request=new_req), 201
     return jsonify(message='No request created'), 400
 
+
 @req.route('/users/requests', methods=['GET'])
 def fetch_all_requests():
     all_requests = request_helper.fetch_all_requests()
     return jsonify({'All requests': all_requests}), 200
 
+
 @req.route('/users/requests/<int:requestId>', methods=['GET'])
 def fetch_request_id(requestId):
     result = request_helper.fetch_by_id_request(requestId)
     return jsonify({'Request found': result}), 200
+
 
 @req.route('/users/requests/<int:requestId>', methods=['PUT'])
 def modify_request(requestId):

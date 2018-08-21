@@ -16,6 +16,8 @@ class TestRequest(unittest.TestCase):
         self.req_db
 
     def test_req_db_type(self):
+        self.assertIsInstance(self.request_helper.req_db, list,
+                              msg='Request database is not a list')
         self.assertIsInstance(self.req_db, list,
                               msg='Request database is not a list')
 
@@ -23,39 +25,19 @@ class TestRequest(unittest.TestCase):
         self.assertIsInstance(self.request_helper, RequestHelper,
                               msg='Request helper class not instantiated')
 
-    def test_req_helper_methods(self):
-        self.assertTrue(hasattr(self.request_helper, 'req_db'),
-                        msg='Missing request database')
-        self.assertTrue(hasattr(self.request_helper, 'check_request'),
-                        msg='Missing check_request method')
-        self.assertTrue(hasattr(self.request_helper, 'create_request'),
-                        msg='Missing create_request method')
-        self.assertTrue(hasattr(self.request_helper, 'change_request'),
-                        msg='Missing change_request method')
-        self.assertTrue(hasattr(self.request_helper, 'fetch_all_requests'),
-                        msg='Missing fetch_all_requests method')
-        self.assertTrue(hasattr(self.request_helper, 'fetch_by_id_request'),
-                        msg='Missing fetch_by_id_method')
+    def test_req_helper_attributes(self):
+        args = ['req_db', 'check_request', 'change_request',
+                'fetch_by_id_request', 'fetch_all_requests']
+        for arg in args:
+            self.assertTrue(hasattr(self.request_helper, arg),
+                            msg='Missing {0} attribute.'.format(arg))
 
     def test_check_req_method_has_correct_args(self):
-        self.assertIn('self', str(
-                      inspect.getfullargspec(
-                          self.request_helper.check_request)),
-                      msg='Method has no self parameter')
-        self.assertIn('req_id', str(
-                      inspect.getfullargspec(
-                          self.request_helper.check_request)),
-                      msg='Method has no req_id parameter')
-        self.assertIn('req_name', str(
-                      inspect.getfullargspec(
-                          self.request_helper.check_request)),
-                      msg='Method has no req_name parameter')
-        self.assertIn('req_type', str(
-            inspect.getfullargspec(self.request_helper.check_request)),
-            msg='Method has no req_type parameter')
-        self.assertIn('req_desc', str(
-            inspect.getfullargspec(self.request_helper.check_request)),
-            msg='Method has no req_desc parameter')
+        args = ['self', 'req_id', 'req_name', 'req_type', 'req_desc']
+        for arg in args:
+            self.assertIn(arg, str(inspect.getfullargspec(
+                self.request_helper.check_request)),
+                msg='Method has no {0} parameter'.format(arg))
 
     def test_check_req_method_raise_error(self):
         with self.assertRaises(ValueError):
@@ -82,25 +64,11 @@ class TestRequest(unittest.TestCase):
         self.assertTrue(valid_req, msg='Parameters not checked')
 
     def test_create_req_method_has_correct_args(self):
-        self.assertIn('self', str(
-                      inspect.getfullargspec(
-                          self.request_helper.create_request)),
-                      msg='Method has no self parameter')
-        self.assertIn('req_id', str(
-                      inspect.getfullargspec(
-                          self.request_helper.create_request)),
-                      msg='Method has no req_id parameter')
-        self.assertIn('req_name', str(
-                      inspect.getfullargspec(
-                          self.request_helper.create_request)),
-                      msg='Method has no req_name parameter')
-        self.assertIn('req_type', str(
-                      inspect.getfullargspec(
-                          self.request_helper.create_request)),
-                      msg='Method has no req_type parameter')
-        self.assertIn('req_desc', str(
-            inspect.getfullargspec(self.request_helper.create_request)),
-            msg='Method has no req_desc parameter')
+        args = ['self', 'req_id', 'req_name', 'req_type', 'req_desc']
+        for arg in args:
+            self.assertIn(arg, str(inspect.getfullargspec(
+                self.request_helper.create_request)),
+                msg='Method has no {0} parameter'.format(arg))
 
     def test_create_request_return_object_success(self):
         new_req = self.request_helper.create_request(
@@ -113,26 +81,11 @@ class TestRequest(unittest.TestCase):
                                   msg='Invalid RequestClass object')
 
     def test_change_req_method_has_correct_args(self):
-        self.assertIn('self', str(
-                      inspect.getfullargspec(
-                          self.request_helper.change_request)),
-                      msg='Method has no self parameter')
-        self.assertIn('req_id', str(
-                      inspect.getfullargspec(
-                          self.request_helper.change_request)),
-                      msg='Method has no req_id parameter')
-        self.assertIn('new_name', str(
-                      inspect.getfullargspec(
-                          self.request_helper.change_request)),
-                      msg='Method has no new_name parameter')
-        self.assertIn('new_type', str(
-                      inspect.getfullargspec(
-                          self.request_helper.change_request)),
-                      msg='Method has no new_type parameter')
-        self.assertIn('new_desc', str(
-                      inspect.getfullargspec(
-                          self.request_helper.change_request)),
-                      msg='Method has no new_desc parameter')
+        args = ['self', 'req_id', 'new_name', 'new_type', 'new_desc']
+        for arg in args:
+            self.assertIn(arg, str(inspect.getfullargspec(
+                self.request_helper.change_request)),
+                msg='Method has no {0} parameter'.format(arg))
 
     def test_change_req_method_success(self):
         self.request_helper.create_request(
@@ -171,14 +124,11 @@ class TestRequest(unittest.TestCase):
                          msg='Non-existent request can be changed.')
 
     def test_fetch_req_id_method_has_correct_args(self):
-        self.assertIn('self', str(
-                      inspect.getfullargspec(
-                          self.request_helper.fetch_by_id_request)),
-                      msg='Method has no self parameter')
-        self.assertIn('req_id', str(
-                      inspect.getfullargspec(
-                          self.request_helper.fetch_by_id_request)),
-                      msg='Method has no req_id parameter')
+        args = ['self', 'req_id']
+        for arg in args:
+            self.assertIn(arg, str(inspect.getfullargspec(
+                self.request_helper.fetch_by_id_request)),
+                msg='Method has no {0} parameter'.format(arg))
 
     def test_fetch_req_id_non_existent(self):
         self.request_helper.create_request(
@@ -200,10 +150,9 @@ class TestRequest(unittest.TestCase):
                          msg='Request can\'t be fetched by id')
 
     def test_fetch_all_req_method_has_correct_args(self):
-        self.assertIn('self', str(
-                      inspect.getfullargspec(
-                          self.request_helper.fetch_all_requests)),
-                      msg='Method has no self parameter')
+        self.assertIn('self', str(inspect.getfullargspec(
+            self.request_helper.fetch_all_requests)),
+            msg='Method has no self parameter')
 
     def test_fetch_all_req_method_success(self):
         self.request_helper.create_request(
