@@ -41,16 +41,25 @@ class RequestHelper(object):
             self.req_db.append(new_req)
             return vars(new_req)
 
-    def change_request(self, req_id, new_name, new_type, new_desc):
+    def change_request(self, req_id, new_name=None, new_type=None, new_desc=None):
         """Method for modifyng a request.
         Takes a request's id, the new name, type and description
         and updates the RequestClass object with the request id specified."""
         if self.check_request(req_id, new_name, new_type, new_desc):
             for req in self.req_db:
                 if req_id == req.req_id:
-                    req.req_name = new_name
-                    req.req_type = new_type
-                    req.req_desc = new_desc
+                    old_req_name = req.req_name
+                    old_req_type = req.req_type
+                    old_req_desc = req.req_desc
+
+                    if new_name and new_name != old_req_name:
+                        req.req_name = new_name
+
+                    if new_type and new_type != old_req_type:
+                        req.req_type = new_type
+
+                    if new_desc and new_desc != old_req_desc:
+                        req.req_desc = new_desc
                     return vars(req)
         return False
 
