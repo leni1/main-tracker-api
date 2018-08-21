@@ -22,9 +22,9 @@ class MaintenanceViews(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(
                 dict(
-                    name='Failing Test',
+                    req_name='Failing Test',
                     req_type='Test',
-                    description='A failing test')))
+                    req_desc='A failing test')))
         response = self.test_request.get('/users/requests',
                                          content_type='application/json')
         self.assertEqual(response.status_code, 200)
@@ -35,9 +35,9 @@ class MaintenanceViews(unittest.TestCase):
             content_type='application/json',
             data=json.dumps(
                 dict(
-                    name='Failing Test',
+                    req_name='Failing Test',
                     req_type='Test',
-                    description='A failing test')))
+                    req_desc='A failing test')))
         req_id = json.loads(new_req.get_data())['new_request']['req_id']
         response = self.test_request.get(
             '/users/requests/' + str(req_id),
