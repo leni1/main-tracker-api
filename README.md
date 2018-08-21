@@ -18,7 +18,7 @@ PUT /api/v1/users/requests/`<requestId>` | Modify a request
 ## Note
 This API will use data structures to store data.
 
-## Instructions
+### Instructions
 
 1. Clone the repository as follows:
 
@@ -39,18 +39,20 @@ This API will use data structures to store data.
 4. Activate the virtual environment and install the dependencies in `requirements.txt`
 
     `source name-of-virtual-environment/bin/activate`
+
     `pip install -r requirements.txt`
 
 5. Export the application as an environment variable and set the `flask` environment to production
 
     `export FLASK_APP=api`
+
     `export FLASK_ENV=production`
 
 6. Run the application using `flask run` and test the endpoints with sample data using Postman or `curl`.
 
-## Tests
+### Tests
 To run tests, follow steps 1 to 4 (if you haven't already done so) and then enter `pytest tests/` at the command prompt.
 
-## Author
+### Author
 
 Leni Kadali Mutungi
