@@ -17,7 +17,7 @@ class MaintenanceViews(unittest.TestCase):
         self.req_db
 
     def test_create_request(self):
-        new_req = self.test_request.post('/users/requests',
+        new_req = self.test_request.post('/api/v1/users/requests',
                                          content_type='application/json',
                                          data=json.dumps(
                                              dict(req_name='Failing Test',
@@ -27,7 +27,7 @@ class MaintenanceViews(unittest.TestCase):
         self.assertEqual(new_req.status_code, 201)
 
     def test_create_request_without_name(self):
-        new_req = self.test_request.post('/users/requests',
+        new_req = self.test_request.post('/api/v1/users/requests',
                                          content_type='application/json',
                                          data=json.dumps(
                                              dict(req_name='',
@@ -38,7 +38,7 @@ class MaintenanceViews(unittest.TestCase):
                          400, msg='Empty req name allowed')
 
     def test_create_request_without_type(self):
-        new_req = self.test_request.post('/users/requests',
+        new_req = self.test_request.post('/api/v1/users/requests',
                                          content_type='application/json',
                                          data=json.dumps(
                                              dict(req_name='Failing Test',
@@ -49,7 +49,7 @@ class MaintenanceViews(unittest.TestCase):
                          400, msg='Empty req type allowed')
 
     def test_create_request_without_desc(self):
-        new_req = self.test_request.post('/users/requests',
+        new_req = self.test_request.post('/api/v1/users/requests',
                                          content_type='application/json',
                                          data=json.dumps(
                                              dict(req_name='Failing Test',
