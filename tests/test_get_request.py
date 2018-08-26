@@ -18,28 +18,28 @@ class MaintenanceViews(unittest.TestCase):
 
     def test_fetch_all_requests(self):
         self.test_request.post(
-            '/users/requests',
+            '/api/v1/users/requests',
             content_type='application/json',
             data=json.dumps(
                 dict(
-                    name='Failing Test',
+                    req_name='Failing Test',
                     req_type='Test',
-                    description='A failing test')))
-        response = self.test_request.get('/users/requests',
+                    req_desc='A failing test')))
+        response = self.test_request.get('/api/v1/users/requests',
                                          content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
     def test_fetch_request_id(self):
         new_req = self.test_request.post(
-            '/users/requests',
+            '/api/v1/users/requests',
             content_type='application/json',
             data=json.dumps(
                 dict(
-                    name='Failing Test',
+                    req_name='Failing Test',
                     req_type='Test',
-                    description='A failing test')))
+                    req_desc='A failing test')))
         req_id = json.loads(new_req.get_data())['new_request']['req_id']
         response = self.test_request.get(
-            '/users/requests/' + str(req_id),
+            '/api/v1/users/requests/' + str(req_id),
             content_type='application/json')
         self.assertEqual(response.status_code, 200)

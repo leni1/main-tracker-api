@@ -11,9 +11,9 @@ req = Blueprint('req_view', __name__)
 @req.route('/users/requests', methods=['POST'])
 def create_request():
     json_data = request.get_json()
-    request_name = json_data['name']
+    request_name = json_data['req_name']
     request_type = json_data['req_type']
-    request_desc = json_data['description']
+    request_desc = json_data['req_desc']
     request_id = random.randint(1, 10000)
 
     new_req = request_helper.create_request(
@@ -38,9 +38,9 @@ def fetch_request_id(requestId):
 @req.route('/users/requests/<int:requestId>', methods=['PUT'])
 def modify_request(requestId):
     json_data = request.get_json()
-    request_name = json_data['name']
+    request_name = json_data['req_name']
     request_type = json_data['req_type']
-    request_desc = json_data['description']
+    request_desc = json_data['req_desc']
     request_id = requestId
     mod_req = request_helper.change_request(
               request_id, request_name, request_type, request_desc)
