@@ -18,44 +18,44 @@ class MaintenanceViews(unittest.TestCase):
 
     def test_modify_req_success(self):
         new_req = self.test_request.post(
-            '/users/requests',
+            '/api/v1/users/requests',
             content_type='application/json',
             data=json.dumps(
                 dict(
-                    name='Failing Test',
+                    req_name='Failing Test',
                     req_type='Test',
-                    description='A failing test')))
+                    req_desc='A failing test')))
         req_id = json.loads(new_req.get_data())['new_request']['req_id']
         response = self.test_request.put(
-            '/users/requests/' + str(req_id),
+            '/api/v1/users/requests/' + str(req_id),
             content_type='application/json',
             data=json.dumps(
                 dict(
-                    name='New Test Record',
+                    req_name='New Test Record',
                     req_type='New Test',
-                    description='A new failing test'
+                    req_desc='A new failing test'
                 )
             ))
         self.assertEqual(response.status_code, 201)
 
     def test_modify_req_without_name(self):
         new_req = self.test_request.post(
-            '/users/requests',
+            '/api/v1/users/requests',
             content_type='application/json',
             data=json.dumps(
                 dict(
-                    name='Failing Test',
+                    req_name='Failing Test',
                     req_type='Test',
-                    description='A failing test')))
+                    req_desc='A failing test')))
         req_id = json.loads(new_req.get_data())['new_request']['req_id']
         response = self.test_request.put(
-            '/users/requests/' + str(req_id),
+            '/api/v1/users/requests/' + str(req_id),
             content_type='application/json',
             data=json.dumps(
                 dict(
-                    name='',
+                    req_name='',
                     req_type='New Test',
-                    description='A new failing test'
+                    req_desc='A new failing test'
                 )
             ))
         self.assertEqual(response.status_code,
@@ -63,22 +63,22 @@ class MaintenanceViews(unittest.TestCase):
 
     def test_modify_req_without_type(self):
         new_req = self.test_request.post(
-            '/users/requests',
+            '/api/v1/users/requests',
             content_type='application/json',
             data=json.dumps(
                 dict(
-                    name='Failing Test',
+                    req_name='Failing Test',
                     req_type='Test',
-                    description='A failing test')))
+                    req_desc='A failing test')))
         req_id = json.loads(new_req.get_data())['new_request']['req_id']
         response = self.test_request.put(
-            '/users/requests/' + str(req_id),
+            '/api/v1/users/requests/' + str(req_id),
             content_type='application/json',
             data=json.dumps(
                 dict(
-                    name='Failing Test',
+                    req_name='Failing Test',
                     req_type='',
-                    description='A new failing test'
+                    req_desc='A new failing test'
                 )
             ))
         self.assertEqual(response.status_code,
@@ -86,22 +86,22 @@ class MaintenanceViews(unittest.TestCase):
 
     def test_modify_req_without_desc(self):
         new_req = self.test_request.post(
-            '/users/requests',
+            '/api/v1/users/requests',
             content_type='application/json',
             data=json.dumps(
                 dict(
-                    name='Failing Test',
+                    req_name='Failing Test',
                     req_type='Test',
-                    description='A failing test')))
+                    req_desc='A failing test')))
         req_id = json.loads(new_req.get_data())['new_request']['req_id']
         response = self.test_request.put(
-            '/users/requests/' + str(req_id),
+            '/api/v1/users/requests/' + str(req_id),
             content_type='application/json',
             data=json.dumps(
                 dict(
-                    name='New Failing Test',
+                    req_name='New Failing Test',
                     req_type='Test',
-                    description=''
+                    req_desc=''
                 )
             ))
         self.assertEqual(response.status_code,

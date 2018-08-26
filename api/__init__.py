@@ -22,7 +22,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    from .views import request_view
-    app.register_blueprint(request_view.req)
+    from .views.request_view import req
+    app.register_blueprint(req, url_prefix='/api/v1')
 
     return app

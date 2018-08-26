@@ -139,7 +139,7 @@ class TestRequest(unittest.TestCase):
     def test_fetch_req_id_invalid(self):
         self.request_helper.create_request(
             1, 'somename', 'sometype', 'somedescription')
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             self.request_helper.fetch_by_id_request('1')
 
     def test_fetch_req_id_success(self):
