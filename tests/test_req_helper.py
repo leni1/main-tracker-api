@@ -10,10 +10,10 @@ class TestRequest(unittest.TestCase):
 
     def setUp(self):
         self.request_helper = RequestHelper()
-        self.req_db = []
+        self.req_db = self.request_helper.req_db = []
 
     def tearDown(self):
-        self.req_db
+        self.req_db = self.request_helper.req_db = []
 
     def test_req_db_type(self):
         self.assertIsInstance(self.request_helper.req_db, list,
@@ -26,7 +26,8 @@ class TestRequest(unittest.TestCase):
                               msg='Request helper class not instantiated')
 
     def test_req_helper_attributes(self):
-        args = ['req_db', 'check_request', 'change_request',
+        args = ['req_db', 'check_request', 'change_req_name',
+                'change_req_type', 'change_req_desc',
                 'fetch_by_id_request', 'fetch_all_requests']
         for arg in args:
             self.assertTrue(hasattr(self.request_helper, arg),
@@ -73,6 +74,8 @@ class TestRequest(unittest.TestCase):
     def test_create_request_return_object_success(self):
         new_req = self.request_helper.create_request(
             1, 'somename', 'sometype', 'somedescription')
+        self.assertNotEqual(len(self.req_db), 0,
+                            msg='No request created')
         for req in self.req_db:
             self.assertIs(vars(req), new_req, msg='No request created.')
             self.assertTrue(hasattr(req, '__dict__'),
@@ -80,48 +83,143 @@ class TestRequest(unittest.TestCase):
             self.assertIsInstance(req, RequestClass,
                                   msg='Invalid RequestClass object')
 
-    def test_change_req_method_has_correct_args(self):
-        args = ['self', 'req_id', 'new_name', 'new_type', 'new_desc']
+    def test_change_req_name_has_correct_args(self):
+        args = ['self', 'req_id', 'new_name']
         for arg in args:
             self.assertIn(arg, str(inspect.getfullargspec(
-                self.request_helper.change_request)),
+                self.request_helper.change_req_name)),
                 msg='Method has no {0} parameter'.format(arg))
 
-    def test_change_req_method_success(self):
+    def test_change_req_name_success(self):
         self.request_helper.create_request(
             1, 'somename', 'sometype', 'somedescription')
+        self.assertNotEqual(len(self.req_db), 0,
+                            msg='No request created.')
         for req in self.req_db:
             old_req_id = req.req_id
             old_req_name = req.req_name
+            self.assertIn(req, self.req_db,
+                          msg='Request not in database.')
+            self.assertIsInstance(req, RequestClass,
+                                  msg='Invalid RequestClass object.')
+            mod_req = self.request_helper.change_req_name(1, 'newname')
+            self.assertNotEqual(old_req_name, req.req_name,
+                                msg='Request name not updated.')
+            self.assertEqual(old_req_id, req.req_id,
+                             msg='Request ID has been changed.')
+            self.assertIsInstance(mod_req, dict,
+                                  msg='Request not returned as a dictionary.')
+
+    def test_change_req_name_fail_invalid_id(self):
+        self.request_helper.create_request(
+            1, 'somename', 'sometype', 'somedescription'
+        )
+        invalid_req = self.request_helper.change_req_name(
+            2, 'newname')
+        self.assertEqual(invalid_req,
+                         'Request doesn\'t exist or you have wrong values.',
+                         msg='Non-existent request name can be changed.')
+
+    def test_change_req_name_empty_field_fail(self):
+        self.request_helper.create_request(
+            1, 'somename', 'sometype', 'somedescription'
+        )
+        invalid_req = self.request_helper.change_req_name(1, '')
+        self.assertEqual(invalid_req,
+                         'Request doesn\'t exist or you have wrong values.',
+                         msg='Empty values allowed as valid fields.')
+
+    def test_change_req_type_has_correct_args(self):
+        args = ['self', 'req_id', 'new_type']
+        for arg in args:
+            self.assertIn(arg, str(inspect.getfullargspec(
+                self.request_helper.change_req_type)),
+                msg='Method has no {0} parameter'.format(arg))
+
+    def test_change_req_type_success(self):
+        self.request_helper.create_request(
+            1, 'somename', 'sometype', 'somedescription')
+        self.assertNotEqual(len(self.req_db), 0,
+                            msg='No request created.')
+        for req in self.req_db:
+            old_req_id = req.req_id
             old_req_type = req.req_type
+            self.assertIn(req, self.req_db,
+                          msg='Request not in database.')
+            self.assertIsInstance(req, RequestClass,
+                                  msg='Invalid RequestClass object.')
+            mod_req = self.request_helper.change_req_type(1, 'newname')
+            self.assertNotEqual(old_req_type, req.req_type,
+                                msg='Request type not updated.')
+            self.assertEqual(old_req_id, req.req_id,
+                             msg='Request ID has been changed.')
+            self.assertIsInstance(mod_req, dict,
+                                  msg='Request not returned as a dictionary.')
+
+    def test_change_req_type_fail_invalid_id(self):
+        self.request_helper.create_request(
+            1, 'somename', 'sometype', 'somedescription'
+        )
+        invalid_req = self.request_helper.change_req_type(
+            2, 'newname')
+        self.assertEqual(invalid_req,
+                         'Request doesn\'t exist or you have wrong values.',
+                         msg='Non-existent request type can be changed.')
+
+    def test_change_req_type_empty_field_fail(self):
+        self.request_helper.create_request(
+            1, 'somename', 'sometype', 'somedescription'
+        )
+        invalid_req = self.request_helper.change_req_type(1, '')
+        self.assertEqual(invalid_req,
+                         'Request doesn\'t exist or you have wrong values.',
+                         msg='Empty values allowed as valid fields.')
+
+    def test_change_req_desc_has_correct_args(self):
+        args = ['self', 'req_id', 'new_desc']
+        for arg in args:
+            self.assertIn(arg, str(inspect.getfullargspec(
+                self.request_helper.change_req_desc)),
+                msg='Method has no {0} parameter'.format(arg))
+
+    def test_change_req_desc_success(self):
+        self.request_helper.create_request(
+            1, 'somename', 'sometype', 'somedescription')
+        self.assertNotEqual(len(self.req_db), 0,
+                            msg='No request created.')
+        for req in self.req_db:
+            old_req_id = req.req_id
             old_req_desc = req.req_desc
             self.assertIn(req, self.req_db,
                           msg='Request not in database.')
             self.assertIsInstance(req, RequestClass,
                                   msg='Invalid RequestClass object.')
-            mod_req = self.request_helper.change_request(
-                        1, 'newname', 'newtype', 'newdescription')
-            self.assertNotEqual(old_req_name, req.req_name,
-                                msg='Request name not updated.')
-            self.assertNotEqual(old_req_type, req.req_type,
-                                msg='Request type not updated.')
+            mod_req = self.request_helper.change_req_desc(1, 'newdescription')
             self.assertNotEqual(old_req_desc, req.req_desc,
                                 msg='Request description not updated.')
             self.assertEqual(old_req_id, req.req_id,
                              msg='Request ID has been changed.')
-            self.assertIs(mod_req, req, msg='Request not changed')
             self.assertIsInstance(mod_req, dict,
                                   msg='Request not returned as a dictionary.')
 
-    def test_change_req_method_fail_invalid_id(self):
+    def test_change_req_desc_fail_invalid_id(self):
         self.request_helper.create_request(
             1, 'somename', 'sometype', 'somedescription'
         )
-        invalid_req = self.request_helper.change_request(
-            2, 'newname', 'newtype', 'newdescription'
+        invalid_req = self.request_helper.change_req_type(
+            2, 'newdescription')
+        self.assertEqual(invalid_req,
+                         'Request doesn\'t exist or you have wrong values.',
+                         msg='Non-existent req description can be changed.')
+
+    def test_change_req_desc_empty_field_fail(self):
+        self.request_helper.create_request(
+            1, 'somename', 'sometype', 'somedescription'
         )
-        self.assertFalse(invalid_req,
-                         msg='Non-existent request can be changed.')
+        invalid_req = self.request_helper.change_req_desc(1, '')
+        self.assertEqual(invalid_req,
+                         'Request doesn\'t exist or you have wrong values.',
+                         msg='Empty values allowed as valid fields.')
 
     def test_fetch_req_id_method_has_correct_args(self):
         args = ['self', 'req_id']
