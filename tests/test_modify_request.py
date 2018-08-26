@@ -18,7 +18,7 @@ class MaintenanceViews(unittest.TestCase):
 
     def test_modify_req_success(self):
         new_req = self.test_request.post(
-            '/users/requests',
+            '/api/v1/users/requests',
             content_type='application/json',
             data=json.dumps(
                 dict(
@@ -27,7 +27,7 @@ class MaintenanceViews(unittest.TestCase):
                     req_desc='A failing test')))
         req_id = json.loads(new_req.get_data())['new_request']['req_id']
         response = self.test_request.put(
-            '/users/requests/' + str(req_id),
+            '/api/v1/users/requests/' + str(req_id),
             content_type='application/json',
             data=json.dumps(
                 dict(
@@ -40,7 +40,7 @@ class MaintenanceViews(unittest.TestCase):
 
     def test_modify_req_without_name(self):
         new_req = self.test_request.post(
-            '/users/requests',
+            '/api/v1/users/requests',
             content_type='application/json',
             data=json.dumps(
                 dict(
@@ -49,7 +49,7 @@ class MaintenanceViews(unittest.TestCase):
                     req_desc='A failing test')))
         req_id = json.loads(new_req.get_data())['new_request']['req_id']
         response = self.test_request.put(
-            '/users/requests/' + str(req_id),
+            '/api/v1/users/requests/' + str(req_id),
             content_type='application/json',
             data=json.dumps(
                 dict(
@@ -63,7 +63,7 @@ class MaintenanceViews(unittest.TestCase):
 
     def test_modify_req_without_type(self):
         new_req = self.test_request.post(
-            '/users/requests',
+            '/api/v1/users/requests',
             content_type='application/json',
             data=json.dumps(
                 dict(
@@ -72,7 +72,7 @@ class MaintenanceViews(unittest.TestCase):
                     req_desc='A failing test')))
         req_id = json.loads(new_req.get_data())['new_request']['req_id']
         response = self.test_request.put(
-            '/users/requests/' + str(req_id),
+            '/api/v1/users/requests/' + str(req_id),
             content_type='application/json',
             data=json.dumps(
                 dict(
@@ -86,7 +86,7 @@ class MaintenanceViews(unittest.TestCase):
 
     def test_modify_req_without_desc(self):
         new_req = self.test_request.post(
-            '/users/requests',
+            '/api/v1/users/requests',
             content_type='application/json',
             data=json.dumps(
                 dict(
@@ -95,7 +95,7 @@ class MaintenanceViews(unittest.TestCase):
                     req_desc='A failing test')))
         req_id = json.loads(new_req.get_data())['new_request']['req_id']
         response = self.test_request.put(
-            '/users/requests/' + str(req_id),
+            '/api/v1/users/requests/' + str(req_id),
             content_type='application/json',
             data=json.dumps(
                 dict(
