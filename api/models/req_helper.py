@@ -92,80 +92,31 @@ class RequestHelper(object):
             self.req_db.append(new_req)
             return vars(new_req)
 
-    def change_req_name(self, req_id, new_name):
-        """Changes a request's name.
+    def change_req_attr(self, obj, obj_attr, value):
 
-        Takes a request's id and new name and updates
-        the RequestClass object with the request id specified.
+        valid_value = re.search(r'^[A-Za-z\s]', value)
+        valid_attr = re.search(r'^[A-Za-z\s]', obj_attr)
+        if (hasattr(obj, obj_attr)
+            and valid_value
+                and valid_attr):
+                setattr(obj, obj_attr, value)
+                return obj
+        return False
 
-        Args:
-            req_id: Request id number
-            req_name: Request name.
-
-        Returns:
-            The updated RequestClass object in dictionary form
-            For example:
-
-            {'req_id': 1, req_name': 'newname',
-            'req_type': 'sometype', 'req_desc': 'somedescription'}
-        """
-
-        valid_req_name = re.search(r'^[A-Za-z\s]', new_name)
-        for req in self.req_db:
-            if req_id == req.req_id and valid_req_name:
-                req.req_name = new_name
-                return vars(req)
-            return 'Request doesn\'t exist or you have wrong values.'
-
-    def change_req_type(self, req_id, new_type):
-        """Changes a request.
-
-        Takes a request's id and new type and updates
-        the RequestClass object with the request id specified.
-
-        Args:
-            req_id: Request id number
-            req_type: Request type.
-
-        Returns:
-            The updated RequestClass object in dictionary form
-            For example:
-
-            {'req_id': 1, req_name': 'somename',
-            'req_type': 'newtype', 'req_desc': 'somedescription'}
-        """
-
-        valid_req_type = re.search(r'^[A-Za-z\s]', new_type)
-        for req in self.req_db:
-            if req_id == req.req_id and valid_req_type:
-                req.req_type = new_type
-                return vars(req)
-            return 'Request doesn\'t exist or you have wrong values.'
-
-    def change_req_desc(self, req_id, new_desc):
-        """Changes a request.
-
-        Takes a request's id, the new name, type and description
-        and updates the RequestClass object with the request id specified.
-
-        Args:
-            req_id: Request id number
-            req_desc: Request description.
-
-        Returns:
-            The updated RequestClass object in dictionary form
-            For example:
-
-            {'req_id': 1, req_name': 'somename',
-            'req_type': 'sometype', 'req_desc': 'newdescription'}
-        """
-
-        valid_req_desc = re.search(r'^[A-Za-z\s]', new_desc)
-        for req in self.req_db:
-            if req_id == req.req_id and valid_req_desc:
-                req.req_desc = new_desc
-                return vars(req)
-            return 'Request doesn\'t exist or you have wrong values.'
+    def change_request(self, req_id, some_dict):
+        for key in some_dict:
+            try:
+                value = some_dict[key]
+            except TypeError:
+                raise TypeError
+            if key and value:
+                for req in self.req_db:
+                    if req_id == req.req_id:
+                        new_req = self.change_req_attr(
+                            req, key, value
+                        )
+                        return vars(new_req)
+        return False
 
     def fetch_by_id_request(self, req_id):
         """Returns a request with matching id.
@@ -187,7 +138,7 @@ class RequestHelper(object):
         """
 
         if not isinstance(req_id, int):
-            raise ValueError
+            raise TypeError
         for req in self.req_db:
             if req_id == req.req_id:
                 return vars(req)
