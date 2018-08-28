@@ -93,6 +93,25 @@ class RequestHelper(object):
             return vars(new_req)
 
     def change_req_attr(self, obj, obj_attr, value):
+        """Changes an request object's attribute value.
+
+        Takes a request object and changes the RequestClass object
+        attribute value if the object has the attribute.
+
+        Args:
+            obj: Object whose attribute will be changed
+            obj_attr: Object attribute
+            value: The value to be assigned to the object's
+            attribute.
+
+        Returns:
+            obj: The [RequestClass] object with the modified
+            attribute.
+
+            False: If the object does not have the attribute passed
+            or the attribute (or the value to be assigned to the
+            attribute) are not valid.
+        """
 
         valid_value = re.search(r'^[A-Za-z\s]', value)
         valid_attr = re.search(r'^[A-Za-z\s]', obj_attr)
@@ -104,6 +123,29 @@ class RequestHelper(object):
         return False
 
     def change_request(self, req_id, some_dict):
+        """Changes a request with matching id.
+
+        Takes a request's id and changes a matching
+        RequestClass object if the value of some_dict
+        is a dictionary of values.
+
+        Args:
+            req_id: Request id number
+            some_dict: A dictionary containing the attribute
+            to be changed and its value.
+
+        Returns:
+            vars(some_obj): The matching RequestClass object
+            in dictionary form.
+
+            False: If no matching object is found or an invalid
+            value is passed to some_dict
+
+        Raises:
+            TypeError: some_dict is not indexed on dictionary
+            keys and values.
+        """
+
         for key in some_dict:
             try:
                 value = some_dict[key]
