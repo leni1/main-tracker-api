@@ -39,26 +39,10 @@ def fetch_request_id(requestId):
 def modify_request(requestId):
     json_data = request.get_json()
 
-    for key in json_data.keys():
-        if key == 'req_name' and json_data['req_name']:
-            new_req_name = json_data['req_name']
-            mod_req = request_helper.change_req_name(
-                requestId, new_req_name
-            )
-            if mod_req:
-                return jsonify({'Request updated': mod_req}), 201
-        elif key == 'req_type' and json_data['req_type']:
-            new_req_type = json_data['req_type']
-            mod_req = request_helper.change_req_name(
-                requestId, new_req_type
-            )
-            if mod_req:
-                return jsonify({'Request updated': mod_req}), 201
-        elif key == 'req_desc' and json_data['req_desc']:
-            new_req_desc = json_data['req_desc']
-            mod_req = request_helper.change_req_desc(
-                requestId, new_req_desc
-            )
-            if mod_req:
-                return jsonify({'Request updated': mod_req}), 201
+    mod_req = request_helper.change_request(
+        requestId, json_data
+    )
+
+    if mod_req:
+        return jsonify({'Request updated': mod_req}), 201
     return jsonify(message='Invalid request id or values.'), 400
