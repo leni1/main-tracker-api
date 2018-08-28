@@ -93,8 +93,6 @@ class RequestHelper(object):
             return vars(new_req)
 
     def change_req_attr(self, obj, obj_attr, value):
-        if not isinstance(obj, object):
-            raise TypeError
 
         valid_value = re.search(r'^[A-Za-z\s]', value)
         valid_attr = re.search(r'^[A-Za-z\s]', obj_attr)
