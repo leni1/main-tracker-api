@@ -184,7 +184,7 @@ class RequestHelper(object):
         for req in self.req_db:
             if req_id == req.req_id:
                 return vars(req)
-        # return 'Request not found'
+        return 'Request not found'
 
     def fetch_all_requests(self):
         """Returns all requests.
